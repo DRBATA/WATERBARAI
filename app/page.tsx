@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Calendar, Droplets, Sunrise, Waves, SailboatIcon as Yacht, Zap, Camera, Users, Sparkles } from "lucide-react"
 import NeonTriangle from "@/components/neon-triangle"
 import ScrollingBackground from "@/components/scrolling-background"
+import { WaterBarLogo } from "@/components/water-bar-logo"
 
 export default function WaterBarLanding() {
   return (
@@ -32,25 +33,19 @@ export default function WaterBarLanding() {
 
         {/* Hero content */}
         <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-          <div className="mb-8">
-            <div className="flex justify-center mb-6">
-              <div className="relative w-full max-w-3xl">
-                <Image 
-                  src="/waterbarlogo.png" 
-                  alt="The Water Bar Logo" 
-                  width={1000} 
-                  height={1000}
-                  priority
-                  className="w-full h-auto drop-shadow-2xl animate-pulse" 
-                  style={{ animationDuration: '4s' }}
-                  unoptimized
+          <div className="mb-2">
+            <div className="flex justify-center mb-0">
+              <div className="relative w-full max-w-2xl -mt-16">
+                {/* Animated canvas-based logo */}
+                <WaterBarLogo 
+                  width={500} 
+                  height={350} 
+                  className="w-full h-auto drop-shadow-2xl mx-auto"
                 />
-                {/* Add a subtle glow effect behind the logo */}
-                <div className="absolute inset-0 bg-cyan-400 opacity-20 blur-3xl -z-10 rounded-full"></div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-16">
             <Button
               size="lg"
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 text-lg shadow-lg shadow-cyan-500/25 border border-cyan-400/30"
@@ -255,7 +250,7 @@ export default function WaterBarLanding() {
       {/* Footer */}
       <footer className="py-12 px-4 border-t border-cyan-500/20 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-16 mb-12">
             <div className="flex items-center gap-4">
               <Droplets className="w-8 h-8 text-cyan-400" />
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
