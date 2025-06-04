@@ -37,7 +37,7 @@ export default function WaterBarLanding() {
             <div className="flex justify-center mb-6">
               <div className="relative w-full max-w-3xl">
                 <Image 
-                  src="/waterbarlogonew.png" 
+                  src="/waterbarlogo.png" 
                   alt="The Water Bar Logo" 
                   width={1000} 
                   height={1000}
