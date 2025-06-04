@@ -43,6 +43,7 @@ export default function WaterBarLanding() {
                   priority
                   className="w-full h-auto drop-shadow-2xl animate-pulse" 
                   style={{ animationDuration: '4s' }}
+                  unoptimized
                 />
                 {/* Add a subtle glow effect behind the logo */}
                 <div className="absolute inset-0 bg-cyan-400 opacity-20 blur-3xl -z-10 rounded-full"></div>

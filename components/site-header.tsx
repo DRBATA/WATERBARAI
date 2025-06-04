@@ -1,9 +1,37 @@
 "use client"
 
 import Link from "next/link"
-import { Droplets } from "lucide-react"
+import { Droplets, X } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export function SiteHeader() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentPath, setCurrentPath] = useState("/")
+  
+  // Update current path on initial client render
+  useEffect(() => {
+    setCurrentPath(window.location.pathname)
+  }, [])
+  
+  // Close mobile menu when resizing to desktop width
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && mobileMenuOpen) {
+        setMobileMenuOpen(false)
+      }
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [mobileMenuOpen])
+  
+  const navigationLinks = [
+    { href: "/", label: "Home" },
+    { href: "/drinks", label: "Drinks" },
+    { href: "/events", label: "Events" },
+    { href: "/yacht-experience", label: "Yacht Experiences" },
+    { href: "/contact", label: "Contact" },
+  ]
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -16,7 +44,7 @@ export function SiteHeader() {
           <div className="container flex h-16 items-center justify-between px-4">
             {/* Logo area */}
             <div className="flex items-center gap-2">
-              <Link href="/" className="relative group">
+              <Link href="/" className="relative group" onClick={() => setMobileMenuOpen(false)}>
                 <div className="flex items-center gap-2">
                   {/* Water droplet icon with glow effect */}
                   <div className="relative">
@@ -37,34 +65,66 @@ export function SiteHeader() {
               </Link>
             </div>
             
-            {/* Navigation links */}
+            {/* Desktop navigation links */}
             <nav className="hidden md:flex items-center gap-6">
               {
-                [
-                { href: "/", label: "Home" },
-                { href: "/drinks", label: "Drinks" },
-                { href: "/events", label: "Events" },
-                { href: "/yacht-experience", label: "Yacht Experiences" },
-                { href: "/contact", label: "Contact" },
-              ].map((link) => (
+                navigationLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm transition-colors hover:text-cyan-400 ${link.href === "/" ? "text-cyan-400" : "text-slate-300"}`}
+                  className={`text-sm transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-300"}`}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
             
-            {/* Mobile menu icon - just visual for now */}
-            <button className="md:hidden text-cyan-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="4" y1="12" x2="20" y2="12"></line>
-                <line x1="4" y1="6" x2="20" y2="6"></line>
-                <line x1="4" y1="18" x2="20" y2="18"></line>
-              </svg>
+            {/* Mobile menu toggle button */}
+            <button 
+              className="md:hidden relative z-20 text-cyan-400 focus:outline-none"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="12" x2="20" y2="12"></line>
+                  <line x1="4" y1="6" x2="20" y2="6"></line>
+                  <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+              )}
             </button>
+          </div>
+        </div>
+        
+        {/* Mobile navigation menu - slides in from top */}
+        <div className={`fixed inset-0 pt-16 z-10 transform transition-transform duration-300 ease-in-out md:hidden ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
+          <div className="bg-slate-900/95 backdrop-blur-lg border-b border-cyan-500/20 h-full overflow-y-auto">
+            <div className="container px-4 py-8">
+              <nav className="flex flex-col items-center gap-6">
+                {
+                  navigationLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-lg transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-200"}`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                
+                {/* Extra CTA in mobile menu */}
+                <Link 
+                  href="/contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mt-4 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-md shadow-lg shadow-cyan-500/25"
+                >
+                  Book Now
+                </Link>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
