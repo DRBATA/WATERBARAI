@@ -31,9 +31,8 @@ export default function WaterBarLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-slate-900/40 to-blue-900/60 z-5" />
 
         {/* Hero content */}
-        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto flex flex-col justify-center h-full">
-          {/* On mobile, add extra margin-top to move logo higher */}
-          <div className="mb-8 sm:mt-0 mt-[-25vh]">
+        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+          <div className="mb-8">
             <div className="flex justify-center mb-6">
               <div className="relative w-full max-w-3xl">
                 <Image 

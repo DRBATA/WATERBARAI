@@ -79,41 +79,28 @@ export function SiteHeader() {
               ))}
             </nav>
             
-            {/* Mobile menu toggle button - separated hamburger and close buttons for better touch handling */}
-            {mobileMenuOpen ? (
-              <button 
-                className="md:hidden relative z-50 text-cyan-400 focus:outline-none p-2"
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
-              >
+            {/* Mobile menu toggle button */}
+            <button 
+              className="md:hidden relative z-20 text-cyan-400 focus:outline-none"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
-              </button>
-            ) : (
-              <button 
-                className="md:hidden relative z-50 text-cyan-400 focus:outline-none p-2"
-                onClick={() => setMobileMenuOpen(true)}
-                aria-label="Open menu"
-              >
+              ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="4" y1="12" x2="20" y2="12"></line>
                   <line x1="4" y1="6" x2="20" y2="6"></line>
                   <line x1="4" y1="18" x2="20" y2="18"></line>
                 </svg>
-              </button>
-            )}
+              )}
+            </button>
           </div>
         </div>
         
-        {/* Mobile navigation menu - slides in from top with overlay scrim for additional touch target to close */}
-        <div className={`fixed inset-0 pt-16 z-40 md:hidden ${mobileMenuOpen ? "" : "pointer-events-none"}`}>
-          {/* Backdrop overlay - clicking anywhere closes the menu */}
-          <div 
-            className={`absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0"}`}
-            onClick={() => setMobileMenuOpen(false)}
-          ></div>
-          
-          {/* Menu content */}
-          <div className={`bg-slate-900/95 backdrop-blur-lg border-b border-cyan-500/20 h-full overflow-y-auto transform transition-transform duration-300 ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
+        {/* Mobile navigation menu - slides in from top */}
+        <div className={`fixed inset-0 pt-16 z-10 transform transition-transform duration-300 ease-in-out md:hidden ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
+          <div className="bg-slate-900/95 backdrop-blur-lg border-b border-cyan-500/20 h-full overflow-y-auto">
             <div className="container px-4 py-8">
               <nav className="flex flex-col items-center gap-6">
                 {
