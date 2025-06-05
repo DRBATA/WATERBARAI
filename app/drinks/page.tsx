@@ -1,106 +1,253 @@
+"use client"
+
+import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Zap, Leaf, Sparkles, Droplets, Heart, Waves, Star } from "lucide-react"
+import {
+  Droplets,
+  Star,
+  Plus,
+  Minus,
+  ShoppingCart,
+  Dumbbell,
+  Sun,
+  Brain,
+  Coffee,
+  CheckCircle,
+  Info,
+  Receipt,
+  Zap,
+} from "lucide-react"
 import ScrollingBackground from "@/components/scrolling-background"
 import NeonTriangle from "@/components/neon-triangle"
 
-const drinkCategories = [
+// Wellness situations and their recommendations
+const wellnessSituations = [
   {
-    id: "wellness-elixirs",
-    name: "Wellness Elixirs & Adaptogens",
-    icon: <Zap className="w-8 h-8 text-cyan-300" />,
-    description: "Harness the power of nature with our potent, health-boosting concoctions.",
-    bgGradient: "from-cyan-900/70 to-blue-900/50",
-    borderColor: "border-cyan-500/30",
-    items: [
-      {
-        name: "Sacred Chaga Brew",
-        image: "/drinks/chaga-infographic.png",
-        tagline: "Ancient Wisdom, Modern Vitality",
-        details:
-          "A deeply nourishing brew made from wild-harvested Chaga mushrooms, rich in beta-glucans and antioxidants. Enhanced with our proprietary bioactive compound blend for immune support and mental clarity.",
-        benefits: ["Immune Support", "Mental Clarity", "Antioxidant Rich", "Stress Relief"],
-        price: "AED 45",
-      },
-      {
-        name: "Ceremonial Matcha Latte",
-        image: "/drinks/matcha-latte.png",
-        tagline: "Focused Energy, Elevated Mind",
-        details:
-          "Premium ceremonial-grade matcha whisked to perfection with oat milk and a hint of vanilla. L-theanine provides calm, focused energy without the jitters of coffee.",
-        benefits: ["Sustained Energy", "Mental Focus", "Antioxidant Rich", "Metabolism Boost"],
-        price: "AED 42",
-      },
-    ],
+    id: "heavy-workout",
+    title: "Heavy Workout Recovery",
+    icon: <Dumbbell className="w-6 h-6" />,
+    description: "Post-workout recovery and muscle rebuilding",
+    color: "from-red-500 to-orange-500",
+    borderColor: "border-red-500/30",
+    recommendations: {
+      primary: ["chaga-new-mind"],
+      secondary: ["copper-bottle"],
+      tips: [
+        "Aim for 4 Chaga/New Mind per week for adaptogens and rebuilding amino acids/peptides",
+        "Ensure extra protein in diet (8ml fluid per gram of protein) to avoid puffiness",
+        "Use reusable copper water bottles for all-day fluid rehydration",
+        "Consider adding protein supplements to your diet (not sold here)",
+      ],
+    },
   },
   {
-    id: "premium-mocktails",
-    name: "Premium Zero-Proof Cocktails",
-    icon: <Sparkles className="w-8 h-8 text-amber-300" />,
-    description: "Sophisticated libations without the alcohol. All the complexity, none of the compromise.",
-    bgGradient: "from-amber-900/70 to-orange-900/50",
+    id: "heat-exposure",
+    title: "Sitting in Heat / Dehydration",
+    icon: <Sun className="w-6 h-6" />,
+    description: "Combat heat stress and replace lost electrolytes",
+    color: "from-amber-500 to-yellow-500",
     borderColor: "border-amber-500/30",
-    items: [
-      {
-        name: "Majlis Original",
-        image: "/drinks/majlis-ale.png",
-        tagline: "Refined. Sophisticated. Alcohol-Free.",
-        details:
-          "A premium non-alcoholic ale crafted with traditional brewing methods. Complex malt flavors with a crisp, clean finish that rivals any craft beer.",
-        benefits: ["Zero Alcohol", "Complex Flavors", "Social Confidence", "Craft Quality"],
-        price: "AED 42",
-      },
-      {
-        name: "Neon Nights Mocktail",
-        image: "/neon-blue-cocktail.png",
-        tagline: "Electric Energy, Zero Proof",
-        details:
-          "Blue spirulina, coconut water, lime, and adaptogenic herbs create this Instagram-worthy elixir. Naturally energizing without the crash.",
-        benefits: ["Natural Energy", "Electrolyte Rich", "Photogenic", "Sustained Focus"],
-        price: "AED 48",
-      },
-    ],
+    recommendations: {
+      primary: ["innermost-electrolytes", "chaga-new-mind", "prana-spring-bottle"],
+      secondary: ["perrier-magnetic"],
+      tips: [
+        "1-3 sachets of Innermost (200mg sodium) to replace hypotonic sweat loss",
+        "3 Chaga/New Mind weekly for cardiovascular rebuilding (just one today)",
+        "Prana Spring bottles can have electrolytes mixed in - buy Innermost sachets separately",
+        "Add Perrier Magnetic with 2.4g sugar (1-2 bottles) to aid absorption",
+        "For optimal rehydration, aim for a sodium:potassium ratio of 3:1 normally",
+        "If heavily sweating, shift to a 1:2 ratio (more sodium) to prevent electrolyte imbalance",
+        "Supplement with bananas and greens to truly rehydrate inside cells",
+      ],
+    },
   },
   {
-    id: "functional-beverages",
-    name: "Functional Wellness Drinks",
-    icon: <Heart className="w-8 h-8 text-emerald-300" />,
-    description: "Every sip serves a purpose. Hydration meets intention.",
-    bgGradient: "from-emerald-900/70 to-teal-900/50",
+    id: "general-wellness",
+    title: "General Wellness & Focus",
+    icon: <Brain className="w-6 h-6" />,
+    description: "Balance and mental clarity for daily performance",
+    color: "from-emerald-500 to-teal-500",
     borderColor: "border-emerald-500/30",
-    items: [
-      {
-        name: "Innermost Wellness Collection",
-        image: "/drinks/wellness-products.png",
-        tagline: "Functional Nutrition, Elevated",
-        details:
-          "Curated selection of premium functional beverages including kombucha, adaptogenic waters, and nootropic blends. Each bottle designed for specific wellness goals.",
-        benefits: ["Gut Health", "Cognitive Function", "Stress Management", "Recovery Support"],
-        price: "AED 35-55",
-      },
-      {
-        name: "Hydration Station Selection",
-        image: "/drinks/kombucha-selection.png",
-        tagline: "Pure. Clean. Purposeful.",
-        details:
-          "Premium selection of enhanced waters, electrolyte blends, and probiotic drinks. From alkaline spring water to fermented wellness shots.",
-        benefits: ["Optimal Hydration", "Probiotic Support", "pH Balance", "Mineral Rich"],
-        price: "AED 25-40",
-      },
-    ],
+    recommendations: {
+      primary: ["chaga-new-mind", "prana-spring-bottle", "innermost-electrolytes"],
+      secondary: ["perrier-magnetic"],
+      tips: [
+        "Chaga x New Mind for balance and rebuilding",
+        "Prana Spring bottle with Innermost sachet for optimal mineral balance",
+        "Add Perrier Magnetic for a little carb and mineral boost",
+        "Perfect for maintaining daily wellness and mental clarity",
+      ],
+    },
+  },
+  {
+    id: "calm-flavors",
+    title: "Calmer Non-Soda Options",
+    icon: <Coffee className="w-6 h-6" />,
+    description: "Sophisticated flavors that are less sweet",
+    color: "from-purple-500 to-indigo-500",
+    borderColor: "border-purple-500/30",
+    recommendations: {
+      primary: ["corona-zero", "majlis-ale"],
+      secondary: ["copper-bottle"],
+      tips: [
+        "Corona 0% and Majlis Ale offer sophisticated, less sweet flavors",
+        "Perfect alternatives to sodas with complex taste profiles and reduced sweetness",
+        "Copper bottles provide all-day hydration with free water refills",
+        "Prestigious take-home copper bottles for ongoing wellness",
+      ],
+    },
   },
 ]
 
-export default function DrinksMenuPage() {
+// All available drinks with detailed info
+const allDrinks = {
+  "chaga-new-mind": {
+    name: "Sacred Chaga Brew (New Mind)",
+    image: "/drinks/chaga-infographic.png",
+    price: 45,
+    category: "Adaptogen",
+    benefits: ["Immune Support", "Mental Clarity", "Stress Relief", "Cardiovascular Health"],
+    description: "Wild-harvested Chaga mushrooms with bioactive compounds for immune support and mental clarity.",
+    dosage: "1 daily, aim for 4/week for optimal benefits",
+  },
+  "innermost-electrolytes": {
+    name: "Innermost Electrolyte Sachets",
+    image: "/drinks/wellness-products.png",
+    price: 13,
+    category: "Hydration",
+    benefits: ["Electrolyte Balance", "Sweat Replacement", "Rapid Hydration", "Heat Recovery"],
+    description:
+      "200mg sodium sachets designed to replace hypotonic sweat loss. Mix with Prana Spring bottles or water.",
+    dosage: "1-3 sachets per day during heat exposure",
+  },
+  "prana-spring-bottle": {
+    name: "Prana Spring Water Bottle",
+    image: "/drinks/kombucha-selection.png",
+    price: 35,
+    category: "Hydration",
+    benefits: ["Premium Water", "Mineral Rich", "pH Balance", "Electrolyte Compatible"],
+    description: "Premium spring water bottles that can have electrolytes mixed in. Buy Innermost sachets separately.",
+    dosage: "1-3 bottles as needed",
+  },
+  "perrier-magnetic": {
+    name: "Perrier Magnetic (2.4g Sugar)",
+    image: "/neon-blue-cocktail.png",
+    price: 25,
+    category: "Enhanced Water",
+    benefits: ["Absorption Aid", "Natural Carbonation", "Sugar Enhancement", "Digestive Support"],
+    description: "Perrier with precisely 2.4g sugar to enhance nutrient absorption.",
+    dosage: "1-2 bottles to aid absorption",
+  },
+  "copper-bottle": {
+    name: "Reusable Copper Water Bottle",
+    image: "/drinks/wellness-products.png",
+    price: 120,
+    category: "Equipment",
+    benefits: ["All-Day Hydration", "Antimicrobial", "Copper Benefits", "Sustainable"],
+    description:
+      "Prestigious copper bottle for all-day hydration with free water refills at all Water Bar events. Water only - no electrolytes.",
+    dosage: "Use throughout the day",
+  },
+  "corona-zero": {
+    name: "Corona 0% Alcohol-Free",
+    image: "/drinks/majlis-ale.png",
+    price: 35,
+    category: "Zero-Proof",
+    benefits: ["Calm Flavor", "Social Confidence", "No Alcohol", "Sophisticated"],
+    description: "Crisp, clean taste without alcohol for a calmer drinking experience.",
+    dosage: "As desired",
+  },
+  "majlis-ale": {
+    name: "Majlis Ale Premium",
+    image: "/drinks/majlis-ale.png",
+    price: 42,
+    category: "Zero-Proof",
+    benefits: ["Complex Flavors", "Craft Quality", "Alcohol-Free", "Premium Experience"],
+    description: "Premium non-alcoholic ale with complex malt flavors and sophisticated finish.",
+    dosage: "As desired",
+  },
+  "matcha-drink": {
+    name: "Ceremonial Matcha Drink",
+    image: "/drinks/matcha-latte.png",
+    price: 42,
+    category: "Focus",
+    benefits: ["Sustained Energy", "Mental Focus", "L-Theanine", "Antioxidants"],
+    description: "Ceremonial-grade matcha for calm, focused energy without jitters.",
+    dosage: "1-2 daily for optimal focus",
+  },
+  "ceremonial-tea": {
+    name: "Sacred Ceremonial Tea",
+    image: "/drinks/chaga-infographic.png",
+    price: 38,
+    category: "Calm",
+    benefits: ["Relaxation", "Mindfulness", "Antioxidants", "Ritual"],
+    description: "Traditional ceremonial tea blend for mindful moments and relaxation.",
+    dosage: "As part of mindful practice",
+  },
+  "kombucha-selection": {
+    name: "Premium Kombucha Selection",
+    image: "/drinks/kombucha-selection.png",
+    price: 28,
+    category: "Functional",
+    benefits: ["Gut Health", "Probiotics", "Digestive Support", "Natural Energy"],
+    description: "Curated selection of premium kombucha for gut health and natural energy.",
+    dosage: "1-2 bottles daily",
+  },
+  "wellness-shots": {
+    name: "Functional Wellness Shots",
+    image: "/drinks/wellness-products.png",
+    price: 22,
+    category: "Functional",
+    benefits: ["Concentrated Nutrients", "Immune Boost", "Quick Absorption", "Targeted Benefits"],
+    description: "Concentrated wellness shots with specific functional benefits - immunity, energy, focus.",
+    dosage: "1 shot as needed",
+  },
+}
+
+export default function InteractiveDrinksMenu() {
+  const [selectedSituation, setSelectedSituation] = useState<string | null>(null)
+  const [cart, setCart] = useState<Record<string, number>>({})
+  const [showEducation, setShowEducation] = useState<string | null>(null)
+  const [showAllDrinks, setShowAllDrinks] = useState(false)
+
+  const addToCart = (drinkId: string) => {
+    setCart((prev) => ({
+      ...prev,
+      [drinkId]: (prev[drinkId] || 0) + 1,
+    }))
+  }
+
+  const removeFromCart = (drinkId: string) => {
+    setCart((prev) => ({
+      ...prev,
+      [drinkId]: Math.max(0, (prev[drinkId] || 0) - 1),
+    }))
+  }
+
+  const getCartTotal = () => {
+    return Object.entries(cart).reduce((total, [drinkId, quantity]) => {
+      return total + (allDrinks[drinkId as keyof typeof allDrinks]?.price || 0) * quantity
+    }, 0)
+  }
+
+  const getCartItemCount = () => {
+    return Object.values(cart).reduce((total, quantity) => total + quantity, 0)
+  }
+
+  const currentSituation = selectedSituation ? wellnessSituations.find((s) => s.id === selectedSituation) : null
+
+  // Get functional drinks
+  const functionalDrinks = Object.entries(allDrinks).filter(([_, drink]) => drink.category === "Functional")
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
       <ScrollingBackground />
 
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden z-10">
-        {/* Animated Neon Triangles */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute -top-20 -right-20 animate-pulse delay-300">
             <NeonTriangle size={300} />
@@ -110,148 +257,504 @@ export default function DrinksMenuPage() {
           </div>
         </div>
 
-        {/* Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/drinks/water-bar-truck.png"
-            alt="The Water Bar Mobile Setup"
-            fill
-            sizes="100%"
-            style={{ objectFit: "cover" }}
+            alt="The Water Bar Interactive Menu"
+            layout="fill"
+            objectFit="cover"
             className="opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/90" />
         </div>
 
-        {/* Hero Content */}
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 relative">
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
-                DRINKS MENU
-              </span>
-              <div className="absolute inset-0 text-cyan-400 opacity-20 blur-sm">DRINKS MENU</div>
-            </h1>
-            <div className="flex justify-center gap-4 mb-6">
-              {[Droplets, Leaf, Sparkles].map((Icon, i) => (
-                <Icon
-                  key={i}
-                  className="w-8 h-8 text-cyan-400 animate-bounce"
-                  style={{ animationDelay: `${i * 200}ms` }}
-                />
-              ))}
-            </div>
-          </div>
-          <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Wellness Elixirs, Zero-Proof Cocktails & Functional Beverages
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 relative">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
+              INTERACTIVE MENU
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100 mb-4 max-w-3xl mx-auto leading-relaxed">
+            Personalized Wellness Recommendations
           </p>
           <p className="text-lg text-blue-200 mb-8 max-w-2xl mx-auto">
-            Every drink tells a story. Every sip serves a purpose. Welcome to hydration, reimagined.
+            Tell us what you need, get expert recommendations, and order directly at this event
           </p>
+
+          {/* Cart Summary */}
+          {getCartItemCount() > 0 && (
+            <div className="fixed top-4 right-4 z-50">
+              <Card className="bg-gradient-to-br from-cyan-600/90 to-blue-600/80 border-cyan-400/50 backdrop-blur-md">
+                <CardContent className="p-4 flex items-center gap-3">
+                  <ShoppingCart className="w-5 h-5 text-white" />
+                  <span className="text-white font-semibold">
+                    {getCartItemCount()} items • AED {getCartTotal()}
+                  </span>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Menu Categories */}
-      {drinkCategories.map((category, categoryIndex) => (
-        <section key={category.id} className="py-16 px-4 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            {/* Category Header */}
-            <div className="text-center mb-12">
-              <div className="flex justify-center items-center gap-4 mb-4">
-                {category.icon}
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                  {category.name}
-                </h2>
+      {/* Hydration Philosophy Section */}
+      <section className="py-16 px-4 relative z-10 bg-gradient-to-r from-blue-900/30 to-cyan-900/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-slate-800/70 to-slate-900/50 border border-cyan-500/30 rounded-xl p-6 md:p-8 backdrop-blur-sm">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              The Science of Hydration, Reimagined
+            </h2>
+            <div className="prose prose-invert max-w-none">
+              <p className="text-blue-100 mb-4">
+                This isn't just a drinks menu—it's a personalized wellness consultation. We've created the most
+                sophisticated hydration experience by combining cutting-edge science with practical recommendations
+                tailored to your body's actual needs.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6 mt-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5" /> Precision Hydration
+                  </h3>
+                  <p className="text-blue-200 text-sm">
+                    Our system provides exact sodium:potassium ratios, adapts to your activity level, and recommends
+                    specific product combinations based on your body's current state—whether recovering from exercise,
+                    combating heat, or optimizing daily wellness.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5" /> Functional Benefits
+                  </h3>
+                  <p className="text-blue-200 text-sm">
+                    Beyond basic hydration, our drinks deliver targeted functional benefits—from immune support and
+                    mental clarity to gut health and recovery. Each product is carefully selected for maximum
+                    bioavailability and effectiveness.
+                  </p>
+                </div>
               </div>
-              <p className="text-lg text-blue-200 max-w-2xl mx-auto">{category.description}</p>
+              <p className="text-blue-100 mt-4">
+                Select your current situation below to receive expert recommendations, or browse our full collection of
+                functional drinks to create your perfect hydration strategy.
+              </p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Category Items */}
-            <div className="grid lg:grid-cols-2 gap-8">
-              {category.items.map((item, itemIndex) => (
-                <Card
-                  key={item.name}
-                  className={`bg-gradient-to-br ${category.bgGradient} ${category.borderColor} hover:border-opacity-70 transition-all duration-300 group backdrop-blur-sm overflow-hidden`}
-                >
-                  <div className="grid md:grid-cols-2 h-full">
-                    {/* Image Section */}
-                    <div className="relative h-64 md:h-full">
+      {/* Wellness Situation Selector */}
+      <section className="py-16 px-4 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            What's Your Wellness Goal Today?
+          </h2>
+          <p className="text-lg text-blue-200 text-center mb-12 max-w-2xl mx-auto">
+            Select your situation to get personalized drink recommendations with expert wellness tips
+          </p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {wellnessSituations.map((situation) => (
+              <Card
+                key={situation.id}
+                className={`cursor-pointer transition-all duration-300 group backdrop-blur-sm ${
+                  selectedSituation === situation.id
+                    ? `bg-gradient-to-br ${situation.color}/30 ${situation.borderColor} scale-105 shadow-xl`
+                    : "bg-gradient-to-br from-slate-800/70 to-slate-900/50 border-cyan-500/30 hover:border-cyan-400/50"
+                }`}
+                onClick={() => setSelectedSituation(situation.id)}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="mb-4 text-cyan-300">{situation.icon}</div>
+                  <h3 className="text-xl font-bold text-white mb-2">{situation.title}</h3>
+                  <p className="text-blue-200 text-sm mb-3">{situation.description}</p>
+                  <Badge
+                    className={
+                      selectedSituation === situation.id
+                        ? "bg-cyan-400/30 text-cyan-200 border-cyan-300/50"
+                        : "bg-cyan-500/20 text-cyan-300 border-cyan-400/30"
+                    }
+                  >
+                    {selectedSituation === situation.id ? "Selected" : "Select"}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Browse All Drinks Button */}
+          <div className="text-center mt-8">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-purple-400/50 text-purple-300 hover:bg-purple-400/10 px-8 py-4"
+              onClick={() => setShowAllDrinks(!showAllDrinks)}
+            >
+              <Zap className="w-5 h-5 mr-2" />
+              {showAllDrinks ? "Hide" : "Browse"} All Functional Drinks
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Functional Drinks Section */}
+      {showAllDrinks && (
+        <section className="py-16 px-4 relative z-10 bg-gradient-to-r from-purple-900/30 to-indigo-900/30">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Functional Wellness Drinks
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {functionalDrinks.map(([drinkId, drink]) => {
+                const quantity = cart[drinkId] || 0
+
+                return (
+                  <Card
+                    key={drinkId}
+                    className="bg-gradient-to-br from-slate-800/70 to-slate-900/50 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 group backdrop-blur-sm overflow-hidden"
+                  >
+                    <div className="relative h-48">
                       <Image
-                        src={item.image || "/placeholder.svg"}
-                        alt={item.name}
-                        fill
-                        sizes="100%"
-                        style={{ objectFit: "cover" }}
+                        src={drink.image || "/placeholder.svg"}
+                        alt={drink.name}
+                        layout="fill"
+                        objectFit="cover"
                         className="group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <div className="absolute bottom-4 left-4">
-                        <Badge className="bg-cyan-500/20 text-cyan-300 border-cyan-400/30">{item.price}</Badge>
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">
+                          {drink.category}
+                        </Badge>
+                      </div>
+                      <div className="absolute top-4 right-4">
+                        <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
+                          AED {drink.price}
+                        </Badge>
                       </div>
                     </div>
 
-                    {/* Content Section */}
-                    <CardContent className="p-6 flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">{item.name}</h3>
-                        <p className="text-cyan-300 italic mb-4">{item.tagline}</p>
-                        <p className="text-blue-200 text-sm leading-relaxed mb-6">{item.details}</p>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-bold text-white mb-2">{drink.name}</h3>
+                      <p className="text-blue-200 text-sm mb-4 leading-relaxed">{drink.description}</p>
+
+                      <div className="grid grid-cols-2 gap-2 mb-4">
+                        {drink.benefits.slice(0, 4).map((benefit) => (
+                          <div key={benefit} className="flex items-center gap-1">
+                            <Star className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                            <span className="text-blue-100 text-xs">{benefit}</span>
+                          </div>
+                        ))}
                       </div>
 
-                      {/* Benefits */}
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-2">
-                          {item.benefits.map((benefit) => (
-                            <div key={benefit} className="flex items-center gap-2">
-                              <Star className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                              <span className="text-blue-100 text-sm">{benefit}</span>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="text-xs text-cyan-300 mb-4 bg-cyan-900/30 rounded p-2">
+                        <strong>Dosage:</strong> {drink.dosage}
+                      </div>
+
+                      <div className="flex items-center justify-between">
                         <Button
                           variant="outline"
-                          className="w-full border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10"
+                          size="sm"
+                          className="border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10"
+                          onClick={() => setShowEducation(showEducation === drinkId ? null : drinkId)}
                         >
-                          Add to Order
+                          <Info className="w-4 h-4 mr-1" />
+                          Learn More
                         </Button>
+
+                        <div className="flex items-center gap-2">
+                          {quantity > 0 && (
+                            <>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="w-8 h-8 p-0 border-red-400/50 text-red-300 hover:bg-red-400/10"
+                                onClick={() => removeFromCart(drinkId)}
+                              >
+                                <Minus className="w-4 h-4" />
+                              </Button>
+                              <span className="text-white font-semibold w-8 text-center">{quantity}</span>
+                            </>
+                          )}
+                          <Button
+                            size="sm"
+                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                            onClick={() => addToCart(drinkId)}
+                          >
+                            <Plus className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
+
+                      {/* Education Dropdown */}
+                      {showEducation === drinkId && (
+                        <div className="mt-4 p-4 bg-slate-700/50 rounded-lg border border-cyan-500/30">
+                          <h4 className="text-cyan-300 font-semibold mb-2">Benefits & Science</h4>
+                          <div className="space-y-2">
+                            {drink.benefits.map((benefit) => (
+                              <div key={benefit} className="flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                <span className="text-blue-200 text-sm">{benefit}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </CardContent>
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                )
+              })}
             </div>
           </div>
         </section>
-      ))}
+      )}
 
-      {/* Call to Action Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-purple-900/50 to-pink-900/50 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Craft Your Perfect Order
-          </h2>
-          <p className="text-xl text-purple-200 mb-8 leading-relaxed">
-            Mix and match from our curated selection. Create your own wellness journey, one sip at a time.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 text-lg shadow-lg shadow-cyan-500/25"
+      {/* Personalized Recommendations */}
+      {currentSituation && (
+        <section className="py-16 px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <Card
+              className={`bg-gradient-to-br ${currentSituation.color}/20 ${currentSituation.borderColor} backdrop-blur-sm mb-8`}
             >
-              <Droplets className="w-5 h-5 mr-2" />
-              Order for Pickup
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-purple-400/50 text-purple-300 hover:bg-purple-400/10 px-8 py-4 text-lg"
-            >
-              <Waves className="w-5 h-5 mr-2" />
-              Book a Tasting
-            </Button>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-2xl text-white">
+                  {currentSituation.icon}
+                  Recommendations for {currentSituation.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-lg font-semibold text-cyan-300 mb-4 flex items-center gap-2">
+                      <Info className="w-5 h-5" />
+                      Wellness Tips
+                    </h4>
+                    <ul className="space-y-3">
+                      {currentSituation.recommendations.tips.map((tip, index) => (
+                        <li key={index} className="flex items-start gap-2 text-blue-200">
+                          <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm leading-relaxed">{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-cyan-300 mb-4">Recommended Products</h4>
+                    <div className="space-y-2">
+                      {[...currentSituation.recommendations.primary, ...currentSituation.recommendations.secondary].map(
+                        (drinkId) => {
+                          const drink = allDrinks[drinkId as keyof typeof allDrinks]
+                          if (!drink) return null
+                          return (
+                            <div
+                              key={drinkId}
+                              className="flex items-center justify-between bg-slate-800/50 rounded-lg p-3"
+                            >
+                              <span className="text-white font-medium">{drink.name}</span>
+                              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
+                                AED {drink.price}
+                              </Badge>
+                            </div>
+                          )
+                        },
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recommended Drinks Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...currentSituation.recommendations.primary, ...currentSituation.recommendations.secondary].map(
+                (drinkId) => {
+                  const drink = allDrinks[drinkId as keyof typeof allDrinks]
+                  if (!drink) return null
+
+                  const isInCart = cart[drinkId] > 0
+                  const quantity = cart[drinkId] || 0
+
+                  return (
+                    <Card
+                      key={drinkId}
+                      className="bg-gradient-to-br from-slate-800/70 to-slate-900/50 border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-300 group backdrop-blur-sm overflow-hidden"
+                    >
+                      <div className="relative h-48">
+                        <Image
+                          src={drink.image || "/placeholder.svg"}
+                          alt={drink.name}
+                          layout="fill"
+                          objectFit="cover"
+                          className="group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-cyan-500/20 text-cyan-300 border-cyan-400/30">{drink.category}</Badge>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">
+                            AED {drink.price}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">{drink.name}</h3>
+                        <p className="text-blue-200 text-sm mb-4 leading-relaxed">{drink.description}</p>
+
+                        <div className="grid grid-cols-2 gap-2 mb-4">
+                          {drink.benefits.slice(0, 4).map((benefit) => (
+                            <div key={benefit} className="flex items-center gap-1">
+                              <Star className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                              <span className="text-blue-100 text-xs">{benefit}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="text-xs text-cyan-300 mb-4 bg-cyan-900/30 rounded p-2">
+                          <strong>Dosage:</strong> {drink.dosage}
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10"
+                            onClick={() => setShowEducation(showEducation === drinkId ? null : drinkId)}
+                          >
+                            <Info className="w-4 h-4 mr-1" />
+                            Learn More
+                          </Button>
+
+                          <div className="flex items-center gap-2">
+                            {quantity > 0 && (
+                              <>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="w-8 h-8 p-0 border-red-400/50 text-red-300 hover:bg-red-400/10"
+                                  onClick={() => removeFromCart(drinkId)}
+                                >
+                                  <Minus className="w-4 h-4" />
+                                </Button>
+                                <span className="text-white font-semibold w-8 text-center">{quantity}</span>
+                              </>
+                            )}
+                            <Button
+                              size="sm"
+                              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                              onClick={() => addToCart(drinkId)}
+                            >
+                              <Plus className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Education Dropdown */}
+                        {showEducation === drinkId && (
+                          <div className="mt-4 p-4 bg-slate-700/50 rounded-lg border border-cyan-500/30">
+                            <h4 className="text-cyan-300 font-semibold mb-2">Benefits & Science</h4>
+                            <div className="space-y-2">
+                              {drink.benefits.map((benefit) => (
+                                <div key={benefit} className="flex items-center gap-2">
+                                  <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                  <span className="text-blue-200 text-sm">{benefit}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )
+                },
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Cart Summary & Checkout */}
+      {getCartItemCount() > 0 && (
+        <section className="py-16 px-4 bg-gradient-to-r from-purple-900/50 to-pink-900/50 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-br from-slate-800/70 to-slate-900/50 border-cyan-500/40 backdrop-blur-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl text-white flex items-center gap-3">
+                  <ShoppingCart className="w-6 h-6 text-cyan-400" />
+                  Your Wellness Selection
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 mb-6">
+                  {Object.entries(cart)
+                    .filter(([_, quantity]) => quantity > 0)
+                    .map(([drinkId, quantity]) => {
+                      const drink = allDrinks[drinkId as keyof typeof allDrinks]
+                      if (!drink) return null
+
+                      return (
+                        <div key={drinkId} className="flex items-center justify-between bg-slate-700/50 rounded-lg p-4">
+                          <div>
+                            <h4 className="text-white font-semibold">{drink.name}</h4>
+                            <p className="text-blue-200 text-sm">
+                              {drink.category} • {drink.dosage}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <span className="text-cyan-300 font-semibold">
+                              {quantity} × AED {drink.price} = AED {quantity * drink.price}
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="w-8 h-8 p-0 border-red-400/50 text-red-300 hover:bg-red-400/10"
+                                onClick={() => removeFromCart(drinkId)}
+                              >
+                                <Minus className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                className="w-8 h-8 p-0 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                                onClick={() => addToCart(drinkId)}
+                              >
+                                <Plus className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </div>
+
+                <div className="border-t border-cyan-500/30 pt-4">
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-xl font-bold text-white">Total: AED {getCartTotal()}</span>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30 text-lg px-4 py-2">
+                      {getCartItemCount()} items
+                    </Badge>
+                  </div>
+
+                  <div className="text-center">
+                    <p className="text-blue-200 mb-4">
+                      Show this selection to our bartender for payment and preparation
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button
+                        size="lg"
+                        className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-4 text-lg shadow-xl"
+                      >
+                        <Receipt className="w-5 h-5 mr-2" />
+                        Show to Bartender
+                      </Button>
+                      <div className="bg-slate-800/70 rounded-lg px-4 py-2 flex items-center">
+                        <span className="text-amber-300 text-sm">Home delivery coming soon!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="py-12 px-4 border-t border-cyan-500/20 relative z-10">
@@ -267,25 +770,25 @@ export default function DrinksMenuPage() {
               <a href="/" className="hover:text-cyan-400 transition-colors">
                 Home
               </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors">
+              <a href="/events" className="hover:text-cyan-400 transition-colors">
                 Events
               </a>
               <a href="/drinks" className="hover:text-cyan-400 transition-colors">
                 Drinks
               </a>
-              <a href="/yacht-experience" className="hover:text-cyan-400 transition-colors">
-                Yacht Experiences
+              <a href="/sponsor-activation" className="hover:text-cyan-400 transition-colors">
+                Partnerships
               </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors">
-                Contact
-              </a>
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
+              <Button
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                onClick={() => window.open("https://www.instagram.com/thewaterbarae/", "_blank")}
+              >
                 Book Now
               </Button>
             </nav>
           </div>
           <div className="mt-8 pt-8 border-t border-cyan-500/20 text-center text-blue-300">
-            <p>&copy; 2025 The Water Bar. Sunrise wellness, reimagined.</p>
+            <p>&copy; 2025 The Water Bar. Personalized wellness, reimagined.</p>
           </div>
         </div>
       </footer>

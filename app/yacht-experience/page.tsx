@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { CheckCircle, Sailboat, Sparkles, Sun, Wind, Music, ChevronRight, ChevronLeft, Droplets } from "lucide-react"
+import { ScrollToDesignVoyageButton, InstagramFollowButton } from "@/components/yacht-experience-buttons"
 import ScrollingBackground from "@/components/scrolling-background" // Re-using for consistency
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
@@ -88,6 +89,16 @@ export default function YachtExperiencePage() {
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900 text-white relative overflow-x-hidden">
       <ScrollingBackground />
 
+      {/* Coming Next Season Notification */}
+      <div className="sticky top-0 z-50 w-full bg-gradient-to-r from-amber-600 to-amber-800 text-white py-3 px-4 shadow-lg">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          <Sun className="w-5 h-5 mr-2 animate-pulse" />
+          <p className="text-center font-medium">
+            <span className="font-bold">Coming Next Season:</span> Yacht experiences will be available when temperatures cool down. Contact us for future bookings!
+          </p>
+        </div>
+      </div>
+
       {/* Immersive Hero Section */}
       <section className="relative h-[80vh] md:h-[90vh] w-full flex items-center justify-center text-center overflow-hidden z-10">
         {heroImages.map((src, index) => (
@@ -132,13 +143,9 @@ export default function YachtExperiencePage() {
           <p className="text-lg md:text-xl lg:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
             Curated Yacht Experiences. Unforgettable Moments.
           </p>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-10 py-4 text-lg shadow-xl shadow-amber-500/30 transform hover:scale-105 transition-transform"
-            onClick={() => document.getElementById("design-voyage")?.scrollIntoView({ behavior: "smooth" })}
-          >
+          <ScrollToDesignVoyageButton>
             Design Your Voyage
-          </Button>
+          </ScrollToDesignVoyageButton>
         </div>
       </section>
 
@@ -234,97 +241,80 @@ export default function YachtExperiencePage() {
                 Design Your Dream Yacht Experience
               </CardTitle>
               <CardDescription className="text-lg text-blue-100">
-                Let's craft an unforgettable journey. Share your vision with us.
+                Let's craft an unforgettable journey. Plan ahead for next season when temperatures cool down.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               {/* Placeholder for the detailed form - can re-integrate the previous one */}
-              <form className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-blue-200 mb-1">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="w-full bg-slate-700/60 p-3 rounded-md text-white border-cyan-600/60"
-                      placeholder="Your Name"
-                    />
+              <div className="relative space-y-6">
+                {/* Semi-transparent overlay with coming soon message */}
+                <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center z-10 rounded-md">
+                  <Sun className="w-12 h-12 text-amber-500 mb-3 animate-pulse" />
+                  <h3 className="text-xl font-bold text-white mb-1">Coming Next Season</h3>
+                  <p className="text-blue-200 text-center max-w-md px-6">Booking for yacht experiences will reopen when temperatures cool down.</p>
+                  <InstagramFollowButton>
+                    Follow for Updates
+                  </InstagramFollowButton>
+                </div>
+                
+                {/* Visually disabled form in the background */}
+                <form className="space-y-6 opacity-50">
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-blue-200 mb-1">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        className="w-full bg-slate-700/60 p-3 rounded-md text-white border-cyan-600/60"
+                        placeholder="Your Name"
+                        disabled
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-blue-200 mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="w-full bg-slate-700/60 p-3 rounded-md text-white border-cyan-600/60"
+                        placeholder="you@example.com"
+                        disabled
+                      />
+                    </div>
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-blue-200 mb-1">
-                      Email
+                    <label htmlFor="event-details" className="block text-sm font-medium text-blue-200 mb-1">
+                      Tell us about your event
                     </label>
-                    <input
-                      type="email"
-                      id="email"
+                    <textarea
+                      id="event-details"
+                      rows={4}
                       className="w-full bg-slate-700/60 p-3 rounded-md text-white border-cyan-600/60"
-                      placeholder="you@example.com"
-                    />
+                      placeholder="Number of guests, preferred dates, type of experience..."
+                      disabled
+                    ></textarea>
                   </div>
-                </div>
-                <div>
-                  <label htmlFor="event-details" className="block text-sm font-medium text-blue-200 mb-1">
-                    Tell us about your event
-                  </label>
-                  <textarea
-                    id="event-details"
-                    rows={4}
-                    className="w-full bg-slate-700/60 p-3 rounded-md text-white border-cyan-600/60"
-                    placeholder="Number of guests, preferred dates, type of experience..."
-                  ></textarea>
-                </div>
-                <div className="text-center pt-4">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-12 py-4 text-lg shadow-xl"
-                  >
-                    Send Inquiry
-                  </Button>
-                </div>
-              </form>
+                  <div className="text-center pt-4">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-12 py-4 text-lg shadow-xl"
+                      disabled
+                    >
+                      Send Inquiry
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </CardContent>
           </Card>
         </div>
       </section>
 
-      <footer className="py-12 px-4 border-t border-cyan-500/20 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-4">
-              <Droplets className="w-8 h-8 text-cyan-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                THE WATER BAR
-              </span>
-            </div>
-            <nav className="flex flex-wrap justify-center gap-6 text-blue-200">
-              <a href="/" className="hover:text-cyan-400 transition-colors">
-                Home
-              </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors">
-                Events
-              </a>
-              <a href="/drinks" className="hover:text-cyan-400 transition-colors">
-                Drinks
-              </a>
-              <a href="/yacht-experience" className="hover:text-cyan-400 transition-colors">
-                Yacht Experiences
-              </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors">
-                Contact
-              </a>
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
-                Book Now
-              </Button>
-            </nav>
-          </div>
-          <div className="mt-8 pt-8 border-t border-cyan-500/20 text-center text-blue-300">
-            <p>&copy; 2025 The Water Bar. Sunrise wellness, reimagined.</p>
-          </div>
-        </div>
-      </footer>
+
     </div>
   )
 }

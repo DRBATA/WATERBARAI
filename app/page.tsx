@@ -2,10 +2,20 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Droplets, Sunrise, Waves, SailboatIcon as Yacht, Zap, Camera, Users, Sparkles } from "lucide-react"
+import { Camera, Sunrise, Waves, Zap } from "lucide-react"
 import NeonTriangle from "@/components/neon-triangle"
 import ScrollingBackground from "@/components/scrolling-background"
 import { WaterBarLogo } from "@/components/water-bar-logo"
+import {
+  ExperiencePartyButton,
+  DiscoverDrinksButton,
+  DrinkMenuButton,
+  EventsCalendarButton,
+  YachtExperiencesButton,
+  ShareMemoryButton,
+  PartnerWithUsButton,
+  FollowUsButton
+} from "@/components/home-page-buttons"
 
 export default function WaterBarLanding() {
   return (
@@ -46,21 +56,8 @@ export default function WaterBarLanding() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-16">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-4 text-lg shadow-lg shadow-cyan-500/25 border border-cyan-400/30"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Experience the Party
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-amber-400/50 text-amber-300 hover:bg-amber-400/10 px-8 py-4 text-lg"
-            >
-              <Droplets className="w-5 h-5 mr-2" />
-              Discover the Drinks
-            </Button>
+            <ExperiencePartyButton />
+            <DiscoverDrinksButton />
           </div>
         </div>
       </section>
@@ -95,9 +92,7 @@ export default function WaterBarLanding() {
                 <p className="text-blue-200 mb-6 leading-relaxed">
                   From zero-proof cocktails to sacred Chaga, every sip nourishes.
                 </p>
-                <Button variant="outline" className="border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10">
-                  See the Menu
-                </Button>
+                <DrinkMenuButton />
               </CardContent>
             </Card>
 
@@ -124,10 +119,7 @@ export default function WaterBarLanding() {
                 <p className="text-amber-200 mb-6 leading-relaxed">
                   Dubai's first luxury morning rave. Clean, loud, alive.
                 </p>
-                <Button variant="outline" className="border-amber-400/50 text-amber-300 hover:bg-amber-400/10">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  View Events Calendar
-                </Button>
+                <EventsCalendarButton />
               </CardContent>
             </Card>
 
@@ -154,10 +146,7 @@ export default function WaterBarLanding() {
                 <p className="text-emerald-200 mb-6 leading-relaxed">
                   Massage. Meditation. Muscle Recovery. But always fun first.
                 </p>
-                <Button variant="outline" className="border-emerald-400/50 text-emerald-300 hover:bg-emerald-400/10">
-                  <Yacht className="w-4 h-4 mr-2" />
-                  Book a Private Yacht
-                </Button>
+                <YachtExperiencesButton />
               </CardContent>
             </Card>
           </div>
@@ -189,13 +178,7 @@ export default function WaterBarLanding() {
                   Your vibe. Your favorite drink. Your sunrise moment.
                 </p>
                 <p className="text-purple-300 mt-4 mb-6">Upload your photo, describe your morning, save your tape.</p>
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg shadow-lg shadow-purple-500/25"
-                >
-                  <Camera className="w-5 h-5 mr-2" />
-                  Make a Memory
-                </Button>
+                <ShareMemoryButton />
               </CardContent>
             </div>
           </Card>
@@ -215,20 +198,8 @@ export default function WaterBarLanding() {
                 mornings, beautiful drink storytelling.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 py-3"
-                >
-                  <Users className="w-5 h-5 mr-2" />
-                  Work With Us
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-amber-400/50 text-amber-300 hover:bg-amber-400/10 px-6 py-3"
-                >
-                  Download Brand Deck
-                </Button>
+                <PartnerWithUsButton />
+                <FollowUsButton />
               </div>
             </div>
             <div className="relative order-1 lg:order-2 h-96 lg:h-[500px] rounded-2xl overflow-hidden border border-cyan-500/30 shadow-2xl">
@@ -247,39 +218,7 @@ export default function WaterBarLanding() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-cyan-500/20 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-16 mb-12">
-            <div className="flex items-center gap-4">
-              <Droplets className="w-8 h-8 text-cyan-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                THE WATER BAR
-              </span>
-            </div>
-            <nav className="flex flex-wrap justify-center gap-6 text-blue-200">
-              <a href="/events" className="hover:text-cyan-400 transition-colors">
-                Events
-              </a>
-              <a href="/drinks" className="hover:text-cyan-400 transition-colors">
-                Drinks
-              </a>
-              <a href="/yacht-experience" className="hover:text-cyan-400 transition-colors">
-                Yacht Experiences
-              </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors">
-                Contact
-              </a>
-              <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
-                Book Now
-              </Button>
-            </nav>
-          </div>
-          <div className="mt-8 pt-8 border-t border-cyan-500/20 text-center text-blue-300">
-            <p>&copy; 2025 The Water Bar. Sunrise wellness, reimagined.</p>
-          </div>
-        </div>
-      </footer>
+
     </div>
   )
 }

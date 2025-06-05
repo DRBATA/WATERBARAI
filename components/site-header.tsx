@@ -30,7 +30,8 @@ export function SiteHeader() {
     { href: "/drinks", label: "Drinks" },
     { href: "/events", label: "Events" },
     { href: "/yacht-experience", label: "Yacht Experiences" },
-    { href: "/contact", label: "Contact" },
+    { href: "/sponser-activation", label: "Partners" },
+    { href: "https://www.instagram.com/thewaterbarae/", label: "Contact", external: true },
   ]
 
   return (
@@ -69,13 +70,25 @@ export function SiteHeader() {
             <nav className="hidden md:flex items-center gap-6">
               {
                 navigationLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-300"}`}
-                >
-                  {link.label}
-                </Link>
+                link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm transition-colors hover:text-cyan-400 text-slate-300"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-sm transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-300"}`}
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </nav>
             
@@ -105,14 +118,27 @@ export function SiteHeader() {
               <nav className="flex flex-col items-center gap-6">
                 {
                   navigationLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`text-lg transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-200"}`}
-                  >
-                    {link.label}
-                  </Link>
+                  link.external ? (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-lg transition-colors hover:text-cyan-400 text-slate-200"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`text-lg transition-colors hover:text-cyan-400 ${link.href === currentPath ? "text-cyan-400" : "text-slate-200"}`}
+                    >
+                      {link.label}
+                    </Link>
+                  )
                 ))}
                 
                 {/* Extra CTA in mobile menu */}
