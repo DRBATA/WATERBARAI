@@ -1,17 +1,13 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Droplets, X } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [currentPath, setCurrentPath] = useState("/")
-  
-  // Update current path on initial client render
-  useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
+  const currentPath = usePathname()
   
   // Close mobile menu when resizing to desktop width
   useEffect(() => {
