@@ -756,42 +756,7 @@ export default function InteractiveDrinksMenu() {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-cyan-500/20 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-4">
-              <Droplets className="w-8 h-8 text-cyan-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                THE WATER BAR
-              </span>
-            </div>
-            <nav className="flex flex-wrap justify-center gap-6 text-blue-200">
-              <a href="/" className="hover:text-cyan-400 transition-colors">
-                Home
-              </a>
-              <a href="/events" className="hover:text-cyan-400 transition-colors">
-                Events
-              </a>
-              <a href="/drinks" className="hover:text-cyan-400 transition-colors">
-                Drinks
-              </a>
-              <a href="/sponsor-activation" className="hover:text-cyan-400 transition-colors">
-                Partnerships
-              </a>
-              <Button
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
-                onClick={() => window.open("https://www.instagram.com/thewaterbarae/", "_blank")}
-              >
-                Book Now
-              </Button>
-            </nav>
-          </div>
-          <div className="mt-8 pt-8 border-t border-cyan-500/20 text-center text-blue-300">
-            <p>&copy; 2025 The Water Bar. Personalized wellness, reimagined.</p>
-          </div>
-        </div>
-      </footer>
+
     </div>
   )
 }
