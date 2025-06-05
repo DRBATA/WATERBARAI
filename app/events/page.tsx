@@ -116,7 +116,7 @@ const allEvents = [
     time: "11:00 AM - 3:00 PM",
     location: "Dubai Design District",
     category: "Conscious Events",
-    image: "/matchalike.png",
+    image: "/mli99.png",
     description:
       "A groundbreaking fusion of nostalgic Y2K aesthetics, interactive digital experiences, and premium matcha mixology. Step into our immersive time capsule where house and tech music meets ceremonial grade matcha in a multi-sensory journey. Play our custom-designed 'Matcha Madness' game featuring Jake 'Sandstorm' Rodriguez and Zara 'Lightning' Al-Rashid while sipping on specialty mocktails like 'Matcha Sunrise '99' and 'Y2K Fizz'. Originally conceptualized for Kayan Festival, this evolved concept brings something truly innovative to UAE's wellness scene.",
     highlights: ["Interactive Matcha Video Game", "Y2K-Themed Mocktail Menu", "House & Tech Music", "Limited Edition Token NFTs"],
