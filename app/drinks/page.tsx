@@ -83,18 +83,18 @@ const wellnessSituations = [
     },
   },
   {
-    id: "calm-flavors",
-    title: "Calmer Non-Soda Options",
+    id: "gut-health",
+    title: "Gut Health",
     icon: <Coffee className="w-6 h-6" />,
-    description: "Sophisticated flavors that are less sweet",
+    description: "Digestive health and microbiome support",
     color: "from-purple-500 to-indigo-500",
     borderColor: "border-purple-500/30",
     recommendations: {
-      primary: ["corona-zero", "majlis-ale"],
+      primary: ["kombucha-selection"],
       secondary: ["copper-bottle"],
       tips: [
-        "Corona 0% and Majlis Ale offer sophisticated, less sweet flavors",
-        "Perfect alternatives to sodas with complex taste profiles and reduced sweetness",
+        "Premium Kombucha Selection for gut health and natural probiotics",
+        "Support digestive health with fermented beverages rich in beneficial bacteria",
         "Copper bottles provide all-day hydration with free water refills",
         "Prestigious take-home copper bottles for ongoing wellness",
       ],
@@ -125,7 +125,7 @@ const allDrinks = {
   },
   "prana-spring-bottle": {
     name: "Prana Spring Water Bottle",
-    image: "/drinks/kombucha-selection.png",
+    image: "/drinks/prana.png",
     price: 35,
     category: "Hydration",
     benefits: ["Premium Water", "Mineral Rich", "pH Balance", "Electrolyte Compatible"],
@@ -136,14 +136,23 @@ const allDrinks = {
     name: "Perrier Magnetic (2.4g Sugar)",
     image: "/neon-blue-cocktail.png",
     price: 25,
-    category: "Enhanced Water",
+    category: "Non-Alcoholic",
     benefits: ["Absorption Aid", "Natural Carbonation", "Sugar Enhancement", "Digestive Support"],
     description: "Perrier with precisely 2.4g sugar to enhance nutrient absorption.",
     dosage: "1-2 bottles to aid absorption",
   },
+  "perrier-chic": {
+    name: "Perrier Chic",
+    image: "/neon-blue-cocktail.png",
+    price: 25,
+    category: "Non-Alcoholic",
+    benefits: ["Premium Experience", "Natural Carbonation", "Sophisticated Flavor", "Zero Sugar"],
+    description: "Elegant, zero-sugar sparkling water with a sophisticated profile.",
+    dosage: "As desired",
+  },
   "copper-bottle": {
     name: "Reusable Copper Water Bottle",
-    image: "/drinks/wellness-products.png",
+    image: "/drinks/copper.png",
     price: 120,
     category: "Equipment",
     benefits: ["All-Day Hydration", "Antimicrobial", "Copper Benefits", "Sustainable"],
@@ -155,7 +164,7 @@ const allDrinks = {
     name: "Corona 0% Alcohol-Free",
     image: "/drinks/majlis-ale.png",
     price: 35,
-    category: "Zero-Proof",
+    category: "Non-Alcoholic",
     benefits: ["Calm Flavor", "Social Confidence", "No Alcohol", "Sophisticated"],
     description: "Crisp, clean taste without alcohol for a calmer drinking experience.",
     dosage: "As desired",
@@ -164,7 +173,7 @@ const allDrinks = {
     name: "Majlis Ale Premium",
     image: "/drinks/majlis-ale.png",
     price: 42,
-    category: "Zero-Proof",
+    category: "Non-Alcoholic",
     benefits: ["Complex Flavors", "Craft Quality", "Alcohol-Free", "Premium Experience"],
     description: "Premium non-alcoholic ale with complex malt flavors and sophisticated finish.",
     dosage: "As desired",
@@ -191,7 +200,7 @@ const allDrinks = {
     name: "Premium Kombucha Selection",
     image: "/drinks/kombucha-selection.png",
     price: 28,
-    category: "Functional",
+    category: "Gut Health",
     benefits: ["Gut Health", "Probiotics", "Digestive Support", "Natural Energy"],
     description: "Curated selection of premium kombucha for gut health and natural energy.",
     dosage: "1-2 bottles daily",
@@ -200,7 +209,7 @@ const allDrinks = {
     name: "Functional Wellness Shots",
     image: "/drinks/wellness-products.png",
     price: 22,
-    category: "Functional",
+    category: "General Wellness",
     benefits: ["Concentrated Nutrients", "Immune Boost", "Quick Absorption", "Targeted Benefits"],
     description: "Concentrated wellness shots with specific functional benefits - immunity, energy, focus.",
     dosage: "1 shot as needed",
@@ -211,7 +220,7 @@ export default function InteractiveDrinksMenu() {
   const [selectedSituation, setSelectedSituation] = useState<string | null>(null)
   const [cart, setCart] = useState<Record<string, number>>({})
   const [showEducation, setShowEducation] = useState<string | null>(null)
-  const [showAllDrinks, setShowAllDrinks] = useState(false)
+  const [showAllDrinks, setShowAllDrinks] = useState(true)
 
   const addToCart = (drinkId: string) => {
     setCart((prev) => ({
@@ -239,8 +248,8 @@ export default function InteractiveDrinksMenu() {
 
   const currentSituation = selectedSituation ? wellnessSituations.find((s) => s.id === selectedSituation) : null
 
-  // Get functional drinks
-  const functionalDrinks = Object.entries(allDrinks).filter(([_, drink]) => drink.category === "Functional")
+  // Get non-alcoholic beverages
+  const nonAlcoholicDrinks = Object.entries(allDrinks).filter(([_, drink]) => drink.category === "Non-Alcoholic")
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
@@ -373,12 +382,12 @@ export default function InteractiveDrinksMenu() {
                     ? `bg-gradient-to-br ${situation.color}/30 ${situation.borderColor} scale-105 shadow-xl`
                     : "bg-gradient-to-br from-slate-800/70 to-slate-900/50 border-cyan-500/30 hover:border-cyan-400/50"
                 }`}
-                onClick={() => setSelectedSituation(situation.id)}
+                onClick={() => setSelectedSituation(selectedSituation === situation.id ? null : situation.id)}
               >
                 <CardContent className="p-6 text-center">
                   <div className="mb-4 text-cyan-300">{situation.icon}</div>
                   <h3 className="text-xl font-bold text-white mb-2">{situation.title}</h3>
-                  <p className="text-blue-200 text-sm mb-3">{situation.description}</p>
+                  <p className="text-slate-900 font-medium text-sm mb-3">{situation.description}</p>
                   <Badge
                     className={
                       selectedSituation === situation.id
@@ -402,21 +411,21 @@ export default function InteractiveDrinksMenu() {
               onClick={() => setShowAllDrinks(!showAllDrinks)}
             >
               <Zap className="w-5 h-5 mr-2" />
-              {showAllDrinks ? "Hide" : "Browse"} All Functional Drinks
+              {showAllDrinks ? "Hide" : "Browse"} All Non-Alcoholic Beverages
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Functional Drinks Section */}
+      {/* Non-Alcoholic Beverages Section */}
       {showAllDrinks && (
         <section className="py-16 px-4 relative z-10 bg-gradient-to-r from-purple-900/30 to-indigo-900/30">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Functional Wellness Drinks
+              Non-Alcoholic Beverages
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {functionalDrinks.map(([drinkId, drink]) => {
+              {nonAlcoholicDrinks.map(([drinkId, drink]) => {
                 const quantity = cart[drinkId] || 0
 
                 return (
@@ -540,9 +549,9 @@ export default function InteractiveDrinksMenu() {
                     </h4>
                     <ul className="space-y-3">
                       {currentSituation.recommendations.tips.map((tip, index) => (
-                        <li key={index} className="flex items-start gap-2 text-blue-200">
-                          <CheckCircle className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm leading-relaxed">{tip}</span>
+                        <li key={index} className="flex items-start gap-2 text-slate-900 font-medium">
+                          <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                          <span>{tip}</span>
                         </li>
                       ))}
                     </ul>
