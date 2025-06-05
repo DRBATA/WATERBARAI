@@ -246,6 +246,20 @@ export default function InteractiveDrinksMenu() {
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
       <ScrollingBackground />
 
+      {/* Promotional Discount Banner */}
+      <div className="sticky top-0 z-50 w-full bg-gradient-to-r from-cyan-600 to-blue-700 text-white py-3 px-4 shadow-lg">
+        <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap">
+          <Zap className="w-5 h-5 mr-2 animate-pulse text-yellow-300" />
+          <p className="text-center font-medium">
+            <span className="font-bold">HURRY!</span> ENTER CODE <span className="font-bold">THEWATERBAR</span> for DISCOUNT on{' '}
+            <a href="https://www.newmind.ae/collections/single-products/chaga" target="_blank" rel="noopener noreferrer" className="underline hover:text-yellow-200">PRODUCTS</a>
+            {' '}&{' '}
+            <a href="https://www.newmind.ae/collections/bundles" target="_blank" rel="noopener noreferrer" className="underline hover:text-yellow-200">BUNDLES</a>
+            {' '}FOR CHAGA SUBSCRIPTIONS or ONE OFF PURCHASES
+          </p>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden z-10">
         <div className="absolute inset-0 opacity-20">
@@ -261,9 +275,8 @@ export default function InteractiveDrinksMenu() {
           <Image
             src="/drinks/water-bar-truck.png"
             alt="The Water Bar Interactive Menu"
-            layout="fill"
-            objectFit="cover"
-            className="opacity-40"
+            fill
+            className="opacity-40 object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/90" />
         </div>
@@ -415,9 +428,8 @@ export default function InteractiveDrinksMenu() {
                       <Image
                         src={drink.image || "/placeholder.svg"}
                         alt={drink.name}
-                        layout="fill"
-                        objectFit="cover"
-                        className="group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        className="group-hover:scale-105 transition-transform duration-500 object-cover"
                       />
                       <div className="absolute top-4 left-4">
                         <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">
@@ -580,9 +592,8 @@ export default function InteractiveDrinksMenu() {
                         <Image
                           src={drink.image || "/placeholder.svg"}
                           alt={drink.name}
-                          layout="fill"
-                          objectFit="cover"
-                          className="group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          className="group-hover:scale-105 transition-transform duration-500 object-cover"
                         />
                         <div className="absolute top-4 left-4">
                           <Badge className="bg-cyan-500/20 text-cyan-300 border-cyan-400/30">{drink.category}</Badge>

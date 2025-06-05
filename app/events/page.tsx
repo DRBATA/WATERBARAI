@@ -204,9 +204,8 @@ export default function EventsPage() {
           <Image
             src="/events/rooftop-social-gathering.png"
             alt="Water Bar Community Events"
-            layout="fill"
-            objectFit="cover"
-            className="opacity-50"
+            fill
+            className="opacity-50 object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/90" />
         </div>
@@ -309,9 +308,8 @@ export default function EventsPage() {
                     <Image
                       src={event.image || "/placeholder.svg"}
                       alt={event.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      className="group-hover:scale-105 transition-transform duration-500 object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute top-4 left-4">
@@ -422,18 +420,16 @@ export default function EventsPage() {
                   <Image
                     src="/events/dj-mixing-session.png"
                     alt="DJ Session"
-                    layout="fill"
-                    objectFit="cover"
-                    className="hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="hover:scale-105 transition-transform duration-500 object-cover"
                   />
                 </div>
                 <div className="relative h-32 rounded-lg overflow-hidden">
                   <Image
                     src="/events/reception-checkin.png"
                     alt="Event Check-in"
-                    layout="fill"
-                    objectFit="cover"
-                    className="hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="hover:scale-105 transition-transform duration-500 object-cover"
                   />
                 </div>
               </div>
@@ -442,18 +438,16 @@ export default function EventsPage() {
                   <Image
                     src="/events/outdoor-fitness-class.png"
                     alt="Fitness Class"
-                    layout="fill"
-                    objectFit="cover"
-                    className="hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="hover:scale-105 transition-transform duration-500 object-cover"
                   />
                 </div>
                 <div className="relative h-48 rounded-lg overflow-hidden">
                   <Image
                     src="/events/wellness-workshop.png"
                     alt="Wellness Workshop"
-                    layout="fill"
-                    objectFit="cover"
-                    className="hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="hover:scale-105 transition-transform duration-500 object-cover"
                   />
                 </div>
               </div>

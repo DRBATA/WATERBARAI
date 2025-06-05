@@ -132,13 +132,12 @@ export default function SponsorActivationPage() {
             key={src}
             src={src || "/placeholder.svg"}
             alt={`Water Bar Brand Activation ${index + 1}`}
-            layout="fill"
-            objectFit="cover"
-            priority={index === 0}
+            fill
             className={cn(
-              "transition-opacity duration-1000 ease-in-out",
+              "transition-opacity duration-1000 ease-in-out object-cover",
               index === currentHeroImage ? "opacity-100" : "opacity-0",
             )}
+            priority={index === 0}
           />
         ))}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-black/50 to-transparent"></div>
@@ -206,9 +205,8 @@ export default function SponsorActivationPage() {
                     <Image
                       src={imgSrc || "/placeholder.svg"}
                       alt={`${category.title} - Image ${imgIndex + 1}`}
-                      layout="fill"
-                      objectFit="cover"
-                      className="transform hover:scale-105 transition-transform duration-500"
+                      fill
+                      className="transform hover:scale-105 transition-transform duration-500 object-cover"
                     />
                   </div>
                 ))}
@@ -242,9 +240,8 @@ export default function SponsorActivationPage() {
                   <Image
                     src={highlight.image || "/placeholder.svg"}
                     alt={highlight.brand}
-                    layout="fill"
-                    objectFit="cover"
-                    className="group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="group-hover:scale-105 transition-transform duration-500 object-cover"
                   />
                   <div className="absolute top-4 left-4">
                     <Badge className="bg-amber-500/20 text-amber-300 border-amber-400/30">{highlight.badge}</Badge>
