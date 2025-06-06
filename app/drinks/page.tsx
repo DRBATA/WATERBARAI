@@ -27,40 +27,38 @@ import NeonTriangle from "@/components/neon-triangle"
 const wellnessSituations = [
   {
     id: "heavy-workout",
-    title: "Heavy Workout Recovery",
+    title: "Recovery",
     icon: <Dumbbell className="w-6 h-6" />,
-    description: "Post-workout recovery and muscle rebuilding",
+    description: "Post-workout recovery, muscle rebuilding, and stress resilience",
     color: "from-red-500 to-orange-500",
     borderColor: "border-red-500/30",
     recommendations: {
-      primary: ["chaga-new-mind"],
+      primary: ["yala-new-mind", "rite-daily-greens"],
       secondary: ["copper-bottle"],
       tips: [
-        "Aim for 4 Chaga/New Mind per week for adaptogens and rebuilding amino acids/peptides",
-        "Ensure extra protein in diet (8ml fluid per gram of protein) to avoid puffiness",
-        "Use reusable copper water bottles for all-day fluid rehydration",
-        "Consider adding protein supplements to your diet (not sold here)",
+        "YALA Chaga Kombucha supports neuropeptide rebuilding and stress recovery after intense exercise",
+        "Rite Daily Greens provides 5g plant protein per serving to support muscle rebuilding and recovery",
+        "Protein helps retain water in blood vessels and creates osmotic gradients for proper hydration",
+        "Muscle tissue (75-80% water) stores more hydration than fat tissue (10-20% water)",
       ],
     },
   },
   {
     id: "heat-exposure",
-    title: "Sitting in Heat / Dehydration",
+    title: "Rehydration",
     icon: <Sun className="w-6 h-6" />,
     description: "Combat heat stress and replace lost electrolytes",
     color: "from-amber-500 to-yellow-500",
     borderColor: "border-amber-500/30",
     recommendations: {
-      primary: ["innermost-electrolytes", "chaga-new-mind", "prana-spring-bottle"],
-      secondary: ["perrier-magnetic"],
+      primary: ["electrolytes-of-day", "prana-spring-bottle"],
+      secondary: ["yala-new-mind"],
       tips: [
-        "1-3 sachets of Innermost (200mg sodium) to replace hypotonic sweat loss",
-        "3 Chaga/New Mind weekly for cardiovascular rebuilding (just one today)",
-        "Prana Spring bottles can have electrolytes mixed in - buy Innermost sachets separately",
-        "Add Perrier Magnetic with 2.4g sugar (1-2 bottles) to aid absorption",
-        "For optimal rehydration, aim for a sodium:potassium ratio of 3:1 normally",
-        "If heavily sweating, shift to a 1:2 ratio (more sodium) to prevent electrolyte imbalance",
-        "Supplement with bananas and greens to truly rehydrate inside cells",
+        "1-3 electrolyte sachets depending on heat exposure and sweat loss",
+        "Sodium holds water in your body, potassium pulls it into your cells for true hydration",
+        "More sodium needed during heavy sweating, more potassium for daily maintenance",
+        "Prana Spring bottles serve as the perfect carrier for our electrolyte sachets",
+        "Small amounts of sugar (like in Perrier Magnetic) can aid immediate electrolyte absorption",
       ],
     },
   },
@@ -68,17 +66,17 @@ const wellnessSituations = [
     id: "general-wellness",
     title: "General Wellness & Focus",
     icon: <Brain className="w-6 h-6" />,
-    description: "Balance and mental clarity for daily performance",
+    description: "Daily nutrition, cognitive function, and stress balance",
     color: "from-emerald-500 to-teal-500",
     borderColor: "border-emerald-500/30",
     recommendations: {
-      primary: ["chaga-new-mind", "prana-spring-bottle", "innermost-electrolytes"],
-      secondary: ["perrier-magnetic"],
+      primary: ["rite-daily-greens", "prana-spring-bottle"],
+      secondary: ["electrolytes-of-day"],
       tips: [
-        "Chaga x New Mind for balance and rebuilding",
-        "Prana Spring bottle with Innermost sachet for optimal mineral balance",
-        "Add Perrier Magnetic for a little carb and mineral boost",
-        "Perfect for maintaining daily wellness and mental clarity",
+        "Rite Daily Greens delivers 12 fruits/vegetables and 24 minerals for daily micronutrient needs",
+        "Prana Spring bottle provides consistent hydration throughout the day", 
+        "Electrolytes support baseline hydration needs with potassium and magnesium on normal days",
+        "Daily hydration supports cognitive performance and micronutrient absorption",
       ],
     },
   },
@@ -86,17 +84,18 @@ const wellnessSituations = [
     id: "gut-health",
     title: "Gut Health",
     icon: <Coffee className="w-6 h-6" />,
-    description: "Digestive health and microbiome support",
+    description: "Gut-brain axis optimization and microbiome balance",
     color: "from-purple-500 to-indigo-500",
     borderColor: "border-purple-500/30",
     recommendations: {
-      primary: ["kombucha-selection"],
+      primary: ["rite-gut", "yala-new-mind"],
       secondary: ["copper-bottle"],
       tips: [
-        "Premium Kombucha Selection for gut health and natural probiotics",
-        "Support digestive health with fermented beverages rich in beneficial bacteria",
-        "Copper bottles provide all-day hydration with free water refills",
-        "Prestigious take-home copper bottles for ongoing wellness",
+        "Rite Gut Health provides prebiotic fibers that prepare the gut environment for beneficial bacteria",
+        "YALA Chaga Kombucha delivers probiotics that thrive in this prepared environment", 
+        "Together they support the gut-brain axis that influences mood, focus and stress resilience",
+        "Take Rite Gut Health on an empty stomach, followed by YALA with or after food",
+        "Copper bottles provide antimicrobial benefits - refresh every 2-4 hours, no citrus or electrolytes",
       ],
     },
   },
@@ -104,115 +103,126 @@ const wellnessSituations = [
 
 // All available drinks with detailed info
 const allDrinks = {
-  "chaga-new-mind": {
-    name: "Sacred Chaga Brew (New Mind)",
-    image: "/drinks/chaga-infographic.png",
+  "yala-new-mind": {
+    name: "YALA Chaga Kombucha × NEW MIND",
+    image: "/drinks/yalanewmind.png",
     price: 45,
-    category: "Adaptogen",
-    benefits: ["Immune Support", "Mental Clarity", "Stress Relief", "Cardiovascular Health"],
-    description: "Wild-harvested Chaga mushrooms with bioactive compounds for immune support and mental clarity.",
-    dosage: "1 daily, aim for 4/week for optimal benefits",
+    category: "Adaptogenic + Probiotic",
+    benefits: ["Gut-Brain Axis Support", "Stress Resilience", "Cellular Repair", "Mood Balance"],
+    sciencePoints: ["Beta-glucans & Polyphenols", "SCOBY Probiotic Colony", "HPA Axis Stabilization", "Neurotransmitter Support", "Adrenal Recalibration", "Neuropeptide Rebuilding"],
+    description: "A powerful fusion of adaptogenic Chaga mushroom and probiotic kombucha that supports gut-brain axis restoration and stress resilience. Helps shift from sympathetic stress to parasympathetic healing mode while rebuilding your body's signaling peptides.",
+    dosage: "4× weekly for optimal rebuilding, 2-3× during performance periods",
   },
-  "innermost-electrolytes": {
-    name: "Innermost Electrolyte Sachets",
-    image: "/drinks/wellness-products.png",
-    price: 13,
-    category: "Hydration",
-    benefits: ["Electrolyte Balance", "Sweat Replacement", "Rapid Hydration", "Heat Recovery"],
-    description:
-      "200mg sodium sachets designed to replace hypotonic sweat loss. Mix with Prana Spring bottles or water.",
-    dosage: "1-3 sachets per day during heat exposure",
-  },
+  // Electrolyte product moved to electrolytes-of-day with generic branding
   "prana-spring-bottle": {
     name: "Prana Spring Water Bottle",
     image: "/drinks/prana.png",
     price: 35,
     category: "Hydration",
     benefits: ["Premium Water", "Mineral Rich", "pH Balance", "Electrolyte Compatible"],
-    description: "Premium spring water bottles that can have electrolytes mixed in. Buy Innermost sachets separately.",
+    description: "Unique drinking water from an ice and tectonic well beyond the Arctic Circle. Can have electrolytes mixed in. Buy Innermost sachets separately.",
     dosage: "1-3 bottles as needed",
   },
   "perrier-magnetic": {
-    name: "Perrier Magnetic (2.4g Sugar)",
-    image: "/neon-blue-cocktail.png",
-    price: 25,
+    name: "Perrier Magnetic Juice Range",
+    image: "/drinks/perriermagnetic.png",
+    price: 42,
     category: "Non-Alcoholic",
-    benefits: ["Absorption Aid", "Natural Carbonation", "Sugar Enhancement", "Digestive Support"],
-    description: "Perrier with precisely 2.4g sugar to enhance nutrient absorption.",
-    dosage: "1-2 bottles to aid absorption",
+    benefits: [
+      // First 4 will show as stars
+      "Peach & Cherry", "Strawberry & Kiwi", "Pineapple & Mango", "Lemon & Guava",
+      // These show in Benefits & Science section but not as stars
+      "Carbonated Water", "Fruit Juices from Concentrate", "Natural Flavors",
+      "Refreshingly Intense Fruit Taste", "Made with Real Fruit Juice", "Low-Calorie Treat"
+    ],
+    description: "The magnetic attraction between delicious fruits bursting into sparkling water for a pleasurable tasty moment. A bold new experience. More irresistible than ever!",
+    dosage: "In a can for maximum refreshment",
   },
   "perrier-chic": {
-    name: "Perrier Chic",
-    image: "/neon-blue-cocktail.png",
-    price: 25,
+    name: "Maison Perrier Chic Range",
+    image: "/drinks/perrierchic.png",
+    price: 45,
     category: "Non-Alcoholic",
-    benefits: ["Premium Experience", "Natural Carbonation", "Sophisticated Flavor", "Zero Sugar"],
-    description: "Elegant, zero-sugar sparkling water with a sophisticated profile.",
-    dosage: "As desired",
+    benefits: [
+      // First 4 will show as stars
+      "Citrus Fizz", "Roséllini", "Lemonjito", "Bartender Co-created",
+      // These show in Benefits & Science section but not as stars
+      "Bursting Bubbles", "Fruit Juices", "Natural Flavors", "Low-Calorie",
+      "Sophisticated Non-Alcoholic Cocktail Experience", "Delicious Recipes"
+    ],
+    description: "An artful combination of vivid bursting bubbles, fruit juice and natural flavours for a unique and sophisticated non-alcoholic cocktail experience.",
+    dosage: "In a can with style",
   },
   "copper-bottle": {
     name: "Reusable Copper Water Bottle",
     image: "/drinks/copper.png",
     price: 120,
     category: "Equipment",
-    benefits: ["All-Day Hydration", "Antimicrobial", "Copper Benefits", "Sustainable"],
+    benefits: ["All-Day Hydration", "Antimicrobial", "Purifying Properties", "Sustainable"],
+    sciencePoints: ["Copper Ionization", "Enzymatic Support", "Natural Water Purification", "Ancient Ayurvedic Practice", "Eco-Friendly Alternative", "Helps Reduce Plastic Waste"],
     description:
-      "Prestigious copper bottle for all-day hydration with free water refills at all Water Bar events. Water only - no electrolytes.",
-    dosage: "Use throughout the day",
+      "Prestigious antimicrobial copper bottle with unlimited refills per person. A sustainable solution for all-day hydration with free water refills at all Water Bar events. Pure mineral hydration - no citrus, no electrolytes.",
+    dosage: "Refill every 2-4 hours for optimal benefits and safety",
   },
   "corona-zero": {
-    name: "Corona 0% Alcohol-Free",
-    image: "/drinks/majlis-ale.png",
-    price: 35,
+    name: "Corona Cero 0.0% Alcohol-Free",
+    image: "/drinks/corona.png",
+    price: 38,
     category: "Non-Alcoholic",
-    benefits: ["Calm Flavor", "Social Confidence", "No Alcohol", "Sophisticated"],
-    description: "Crisp, clean taste without alcohol for a calmer drinking experience.",
-    dosage: "As desired",
+    benefits: [
+      // First 4 will show as stars
+      "Water", "Barley Malt", "Maize", "Sugar", 
+      // These show in Benefits & Science section but not as stars
+      "Hops", "Natural Flavours", "100% Natural Ingredients", "56 Calories Per Bottle", 
+      "Zero Alcohol, Full Enjoyment", "Authentic Corona Flavor"
+    ],
+    description: "The iconic Corona born at the beach, now with subtle citrus notes for a refreshingly balanced taste. Ideal for any occasion where you prefer to skip the alcohol but not the flavor.",
+    dosage: "Enjoy with sunshine",
   },
   "majlis-ale": {
     name: "Majlis Ale Premium",
     image: "/drinks/majlis-ale.png",
-    price: 42,
+    price: 40,
     category: "Non-Alcoholic",
-    benefits: ["Complex Flavors", "Craft Quality", "Alcohol-Free", "Premium Experience"],
-    description: "Premium non-alcoholic ale with complex malt flavors and sophisticated finish.",
-    dosage: "As desired",
+    benefits: [
+      // First 4 will show as stars
+      "Water", "Barley Malt", "Wheat", "Hops",
+      // These show in Benefits & Science section but not as stars
+      "Natural Flavors", "Complex Flavors", "Craft Quality", "Alcohol-Free", "Premium Experience"
+    ],
+    description: "Premium non-alcoholic ale with complex malt flavors and sophisticated finish. Crafted with quality ingredients for a premium experience.",
+    dosage: "Enjoy anytime",
   },
-  "matcha-drink": {
-    name: "Ceremonial Matcha Drink",
-    image: "/drinks/matcha-latte.png",
-    price: 42,
-    category: "Focus",
-    benefits: ["Sustained Energy", "Mental Focus", "L-Theanine", "Antioxidants"],
-    description: "Ceremonial-grade matcha for calm, focused energy without jitters.",
-    dosage: "1-2 daily for optimal focus",
-  },
-  "ceremonial-tea": {
-    name: "Sacred Ceremonial Tea",
-    image: "/drinks/chaga-infographic.png",
-    price: 38,
-    category: "Calm",
-    benefits: ["Relaxation", "Mindfulness", "Antioxidants", "Ritual"],
-    description: "Traditional ceremonial tea blend for mindful moments and relaxation.",
-    dosage: "As part of mindful practice",
-  },
-  "kombucha-selection": {
-    name: "Premium Kombucha Selection",
-    image: "/drinks/kombucha-selection.png",
+  "rite-gut": {
+    name: "Rite Gut Health",
+    image: "/drinks/guthealth.png",
     price: 28,
-    category: "Gut Health",
-    benefits: ["Gut Health", "Probiotics", "Digestive Support", "Natural Energy"],
-    description: "Curated selection of premium kombucha for gut health and natural energy.",
-    dosage: "1-2 bottles daily",
+    category: "Digestive Health",
+    benefits: ["Natural Peach Flavor", "6g Dietary Fibre", "Prebiotic Fibre Blend", "Helps You Poop Gently"],
+    sciencePoints: ["Patented Nutriose®", "Acacia & Inulin", "Apple Cider Vinegar", "Acerola Vitamin C", "Reduces Bloating", "Vegan & Plant-Based"],
+    description: "This subtly peachy fibre blend supports digestion, eases bloating, and helps restore natural flow. Taken on an emptier stomach — before breakfast, or between meals at the festival — it works best when the gut isn't too busy.",
+    dosage: "Best taken before breakfast or at least 30 minutes away from a heavy meal",
   },
-  "wellness-shots": {
-    name: "Functional Wellness Shots",
-    image: "/drinks/wellness-products.png",
+  "rite-daily-greens": {
+    name: "Rite Daily Greens",
+    image: "/drinks/dailygreens.png",
+    price: 29,
+    category: "Functional Wellness",
+    benefits: ["Lemon-Flavored Greens", "Electrolytes & Vitamins", "Cognitive & Muscle Support", "Plant-Powered Protein"],
+    sciencePoints: ["12 Fruits, Vegetables & Herbs", "24 Minerals & Antioxidants", "5g Plant Protein per Sachet", "Supports Energy & Digestion", "Made with Spirulina & Green Tea", "Vegan & Gluten-Free"],
+    description: "Rite has picked out all the key vegetables and vitamins for this blend, so we don't have to worry about mixing supplements. When we need a little extra hydration and energy boost throughout tiring days, we love stirring it into coconut water for the added electrolytes.",
+    dosage: "Mix with cold water or coconut water for a mid-morning lift",
+  },
+  // Kombucha has been merged with Chaga into yala-new-mind
+  "electrolytes-of-day": {
+    name: "Electrolyte of the Day",
+    image: "/water-bar-hydration-bar-scene.png",
     price: 22,
-    category: "General Wellness",
-    benefits: ["Concentrated Nutrients", "Immune Boost", "Quick Absorption", "Targeted Benefits"],
-    description: "Concentrated wellness shots with specific functional benefits - immunity, energy, focus.",
-    dosage: "1 shot as needed",
+    category: "Precision Hydration",
+    benefits: ["Sodium", "Potassium", "Magnesium", "Cellular Hydration"],
+    sciencePoints: ["Supports Extracellular Water Balance", "Drives Intracellular Hydration", "Optimal Enzyme Function", "Supports Kidney Filtration", "Prevents Water Retention", "Works With Protein Gradients"],
+    description: "Science-based electrolyte formulation that balances sodium (which holds water in your body), potassium (which pulls water into your cells), and magnesium (which helps coordinate hydration processes).",
+    dosage: "1-3 sachets daily depending on heat exposure and activity level",
   },
 }
 
@@ -466,7 +476,7 @@ export default function InteractiveDrinksMenu() {
                       </div>
 
                       <div className="text-xs text-cyan-300 mb-4 bg-cyan-900/30 rounded p-2">
-                        <strong>Dosage:</strong> {drink.dosage}
+                        <strong>Serving Suggestion:</strong> {drink.dosage}
                       </div>
 
                       <div className="flex items-center justify-between">
@@ -628,7 +638,7 @@ export default function InteractiveDrinksMenu() {
                         </div>
 
                         <div className="text-xs text-cyan-300 mb-4 bg-cyan-900/30 rounded p-2">
-                          <strong>Dosage:</strong> {drink.dosage}
+                          <strong>Serving Suggestion:</strong> {drink.dosage}
                         </div>
 
                         <div className="flex items-center justify-between">
